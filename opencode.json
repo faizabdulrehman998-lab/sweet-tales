@@ -1,0 +1,90 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "skills": {
+    "paths": [
+      ".opencode/skills",
+      "/tmp/awesome-opencode/cli-tool/templates/packs/skills",
+      "/tmp/awesome-opencode/cli-tool/templates/skills"
+    ]
+  },
+  "agent": {
+    "code-reviewer": {
+      "description": "Reviews code for quality, security, performance, and maintainability",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.1,
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "deny",
+          "git diff *": "allow",
+          "git log *": "allow",
+          "git show *": "allow"
+        },
+        "webfetch": "deny"
+      }
+    },
+    "security-auditor": {
+      "description": "Performs security audits identifying vulnerabilities, misconfigurations, and dependency risks",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.1,
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "deny",
+          "git log *": "allow",
+          "git diff *": "allow",
+          "npm audit *": "allow",
+          "bun audit *": "allow"
+        },
+        "webfetch": "deny"
+      }
+    },
+    "error-detective": {
+      "description": "Analyzes error logs, stack traces, and crash reports to identify patterns and systemic issues",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.1,
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "grep *": "allow",
+          "git log *": "allow",
+          "git blame *": "allow"
+        }
+      }
+    },
+    "debugger": {
+      "description": "Investigates and debugs issues by analyzing logs, stack traces, and code flow",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.2,
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "git log *": "allow",
+          "git diff *": "allow",
+          "git blame *": "allow",
+          "grep *": "allow"
+        }
+      }
+    },
+    "accessibility-tester": {
+      "description": "Tests and validates accessibility compliance across the application",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.1,
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "deny",
+          "git diff *": "allow",
+          "git log *": "allow"
+        }
+      }
+    }
+  }
+}
